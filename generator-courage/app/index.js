@@ -1,11 +1,13 @@
 var yeoman = require('yeoman-generator');
 
 module.exports = yeoman.generators.Base.extend({
+
   initializing: {
     projectName: function () {
       console.log('Creating files for new project ' + this.name);
     }
   },
+
   prompting: {
     prompts: function() {
       var done = this.async();
@@ -40,7 +42,8 @@ module.exports = yeoman.generators.Base.extend({
         done();
 
       }.bind(this));
-  }
+  },
+
   },
   writing: {
     copyTemplates: function () {
@@ -48,6 +51,11 @@ module.exports = yeoman.generators.Base.extend({
       this.template('../../templates/main-.tpl.js', 'main-' + this.proj() + '.js');
       this.template('../../templates/models/Model.tpl.js', 'models/' + this.ctor() + '.js');
       this.template('../../templates/views/View.tpl.js', 'views/' + this.ctor() + '.js');
+    },
+
+    copyTests: function () {
+      this.template('../../templates/tests/Controller_spec.tpl.js', this.ctor() + 'Controller_spec.js');
+      this.template('../../templates/tests/View_spec.tpl.js', this.ctor() + '_spec.js');
     }
   },
 

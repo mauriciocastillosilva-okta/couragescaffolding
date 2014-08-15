@@ -2,8 +2,8 @@ define('config', ['module'], function (module) {
   return module.config();
 });
 
-require(['config', '<%=_.camelize(name)%>/<%=_.camelize(name)%>Controller'],
-function (config, <%=_.camelize(name)%>Controller) {
-  var controller = new <%=_.camelize(name)%>Controller(config);
+require(['config', '<%= proj %>/<%= ctor %>Controller'],
+function (config, <%= ctor %>Controller) {
+  var controller = new <%= ctor %>Controller(config);
   controller.render();
 });

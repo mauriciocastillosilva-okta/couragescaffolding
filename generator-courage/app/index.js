@@ -112,20 +112,20 @@ module.exports = yeoman.generators.Base.extend({
 
   end: {
     jspOutput: function () {
-      console.log('All files for project ' + this.proj() + ' have been generated.');
-      console.log('Copy the next lines to the jsp where you need to include this project');
-      console.log('');
-      console.log('  <div id="'+ this.proj() + '-container">');
-      console.log('    <ss:requirejs main="' + this.proj() + '/main-' + this.proj() + '">');
-      console.log('    <script>');
-      console.log('      require.config || (require.config = {});');
-      console.log('      require.config[\'config\'] = {');
-      console.log('        el: \'#' + this.proj() + '-container\'');
-      console.log('      };');
-      console.log('    </script>');
-      console.log('    </ss:requirejs>');
-      console.log('  </div>');
-      console.log('');
+      this.log('All files for project ' + this.proj() + ' have been generated.');
+      this.log('Copy the next lines to the jsp where you need to include this project');
+      this.log('');
+      this.log('  <div id="'+ this.proj() + '-container">');
+      this.log('    <ss:requirejs main="' + this.proj() + '/main-' + this.proj() + '">');
+      this.log('    <script>');
+      this.log('      require.config || (require.config = {});');
+      this.log('      require.config[\'config\'] = {');
+      this.log('        el: \'#' + this.proj() + '-container\'');
+      this.log('      };');
+      this.log('    </script>');
+      this.log('    </ss:requirejs>');
+      this.log('  </div>');
+      this.log('');
     }
   }
 

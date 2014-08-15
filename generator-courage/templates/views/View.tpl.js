@@ -5,7 +5,7 @@ function (BaseForm) {
 
   return BaseForm.extend({
 
-    title: 'FORM_TITLE',
+    title: '<%= formTitle %>',
     layout: 'o-form-theme',
     read: true,
     autoSave: true,

@@ -7,21 +7,40 @@ module.exports = yeoman.generators.Base.extend({
 	  }
   },
   prompting: {
-     projectName: function() {
+     prompts: function() {
      	var done = this.async();
-	        this.prompt({
-	        	type    : 'input',
+     	var prompts = [{
+                type    : 'input',
 	      		name    : 'name',
 	     		message : 'Your project name'
-	     	}, function (answers) {
-	     	if( answers.name === "" ) {
+     	},{
+     	        type    : 'input',
+	      		name    : 'api',
+	     		message : 'API endpoint',
+	     		default : '/change/this/endpoint'
+	    },{
+	    		type    : 'input',
+	      		name    : 'formTitle',
+	     		message : 'Form Title',
+	     		default : 'FORM_TITLE'
+	    }];
+
+	    this.prompt(prompts, function (answers) {
+	    	// Check for required project name
+        	if( answers.projectName === "" ) {
 	     		throw { name: 'FatalError', message: 'You must define project name.' };
 	     	} 
 		    this.name = answers.name;
 		    this.log("ProjectName = " + this.name);
-		     done();
-		    }.bind(this));
-	 }
+
+		    //check for optional inputs
+		    this.api = answers.api;
+		    this.formTitle = answers.formTitle;
+
+		    done();
+
+	    }.bind(this));
+	}
   },
   writing: {
 	  copyTemplates: function () {

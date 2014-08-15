@@ -10,7 +10,7 @@ function (BaseModel) {
       	// Add your variables here
       },
 
-      url: '[API_URL]'
+      url: '<%= api %>'
 
     })
   };

@@ -51,11 +51,10 @@ module.exports = yeoman.generators.Base.extend({
   },
   writing: {
 	  copyTemplates: function () {
-	  	this.template('../../templates/Controller.tpl.js', this.ctor + 'Controller.js');
-	    this.template('../../templates/main-.tpl.js', 'main-' + this.proj + '.js');
-	    this.template('../../templates/models/Model.tpl.js', 'views/' + this.ctor + '.js');
-	    this.template('../../templates/views/View.tpl.js', 'models/' + this.ctor + '.js');
-	  	
+        this.template('../../templates/Controller.tpl.js', this.ctor() + 'Controller.js');
+        this.template('../../templates/main-.tpl.js', 'main-' + this.proj() + '.js');
+        this.template('../../templates/models/Model.tpl.js', 'models/' + this.ctor() + '.js');
+        this.template('../../templates/views/View.tpl.js', 'views/' + this.ctor() + '.js');
 	  }
   },
 

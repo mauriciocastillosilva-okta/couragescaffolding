@@ -2,37 +2,61 @@ var yeoman = require('yeoman-generator');
 
 module.exports = yeoman.generators.Base.extend({
 
+  constructor: function () {
+    yeoman.generators.Base.apply(this, arguments);
+    this.argument('new', { type: String, required: false });
+    this.argument('delete', { type: String, required: false });
+
+    // setup project name from argument
+    this.name = this.new;
+  },
+
   initializing: {
+    projectNamePrompt: function () {
+      // If the user didn't specify a name for --new, prompt here for it
+      if(typeof this.name === 'undefined' || this.name === null || this.name === "") {
+        var pName = this.async();
+        var pPrompt = [{
+            type    : 'input',
+            name    : 'name',
+            message : 'Project Name',
+        }];
+        var self = this;
+        this.prompt(pPrompt, function (answers) {
+            // If they still refuse, quit
+            if( answers.name === "" ) {
+              throw { name: 'FatalError', message: 'You must define project name.' };
+            }
+            self.name = answers.name;
+            pName();
+        });
+      }
+
+    },
     projectName: function () {
-      console.log('Creating files for new project ' + this.name);
+          this.log('Creating files for new project ' + this.name);
     }
   },
 
   prompting: {
-    prompts: function() {
+    optionalPrompts: function() {
+      this.log(this.yeoman);
+
       var done = this.async();
       var prompts = [{
-        type    : 'input',
-        name    : 'name',
-        message : 'Your project name'
+          type    : 'input',
+          name    : 'api',
+          message : 'API endpoint',
+          default : '/change/this/endpoint'
       },{
-        type    : 'input',
-        name    : 'api',
-        message : 'API endpoint',
-        default : '/change/this/endpoint'
-      },{
-        type    : 'input',
-        name    : 'formTitle',
-        message : 'Form Title',
-        default : 'FORM_TITLE'
+          type    : 'input',
+          name    : 'formTitle',
+          message : 'Form Title',
+          default : 'FORM_TITLE'
       }];
 
       this.prompt(prompts, function (answers) {
-        // Check for required project name
-          if( answers.projectName === "" ) {
-            throw { name: 'FatalError', message: 'You must define project name.' };
-         }
-        this.name = answers.name;
+        
         this.log("ProjectName = " + this.name);
 
         //check for optional inputs
@@ -42,9 +66,9 @@ module.exports = yeoman.generators.Base.extend({
         done();
 
       }.bind(this));
+    }
   },
 
-  },
   writing: {
     copyTemplates: function () {
       this.template('../../templates/Controller.tpl.js', this.ctor() + 'Controller.js');
@@ -69,8 +93,8 @@ module.exports = yeoman.generators.Base.extend({
     }
   },
 
-  proj: function () { return this.util.lowercase(this.name)},
-  ctor: function () { return this.util.capitalize(this.name)},
+  proj: function () { if(this.name) {return this.util.lowercase(this.name)}},
+  ctor: function () { if(this.name) {return this.util.capitalize(this.name)}},
 
   end: {
     jspOutput: function () {

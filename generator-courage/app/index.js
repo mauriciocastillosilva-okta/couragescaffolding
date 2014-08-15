@@ -18,6 +18,11 @@ module.exports = yeoman.generators.Base.extend({
 	      		name    : 'api',
 	     		message : 'API endpoint',
 	     		default : '/change/this/endpoint'
+	    },{
+	    		type    : 'input',
+	      		name    : 'formTitle',
+	     		message : 'Form Title',
+	     		default : 'FORM_TITLE'
 	    }];
 
 	    this.prompt(prompts, function (answers) {
@@ -28,8 +33,10 @@ module.exports = yeoman.generators.Base.extend({
 		    this.name = answers.name;
 		    this.log("ProjectName = " + this.name);
 
-		    //check for optional API endpoint
+		    //check for optional inputs
 		    this.api = answers.api;
+		    this.formTitle = answers.formTitle;
+
 		    done();
 
 	    }.bind(this));

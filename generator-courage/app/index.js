@@ -7,10 +7,8 @@ module.exports = yeoman.generators.NamedBase.extend({
 	  },
 
 	  test2: function () {
-	  	if (this.name == 'Mau') {
 	  		this.template('../../templates/Controller.tpl.js', 'Controller.js');
 	  		console.log('I created your new Controller!!');
-	  	}
 	  }
   },
 

@@ -1,8 +1,9 @@
 /* jshint maxparams:8 */
+/*<%= _.camelize(name) %>, Courage Scaffolding Generated*/
 define([
   'shared/util/BaseController',
-  './views/PROJECTForm',
-  './models/PROJECTModel'
+  './views/<%= _.camelize(name) %>Form',
+  './models/<%= _.camelize(name) %>Model'
 ], function (BaseController, theForm, theModel) {
   return BaseController.extend({
 

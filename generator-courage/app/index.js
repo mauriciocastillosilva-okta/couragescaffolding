@@ -23,6 +23,11 @@ module.exports = yeoman.generators.Base.extend({
         name    : 'formTitle',
         message : 'Form Title',
         default : 'FORM_TITLE'
+      },{
+        type    : 'input',
+        name    : 'target',
+        message : 'Target folder, leave empty to use current folder',
+        default : ''
       }];
 
       this.prompt(prompts, function (answers) {
@@ -36,18 +41,23 @@ module.exports = yeoman.generators.Base.extend({
         //check for optional inputs
         this.api = answers.api;
         this.formTitle = answers.formTitle;
+        this.target = answers.target;
 
         done();
 
       }.bind(this));
-  }
+    }
   },
   writing: {
     copyTemplates: function () {
-      this.template('../../templates/Controller.tpl.js', this.ctor() + 'Controller.js');
-      this.template('../../templates/main-.tpl.js', 'main-' + this.proj() + '.js');
-      this.template('../../templates/models/Model.tpl.js', 'models/' + this.ctor() + '.js');
-      this.template('../../templates/views/View.tpl.js', 'views/' + this.ctor() + '.js');
+      if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
+        this.target += '/';
+      }
+      var targetDir = this.target + this.proj() + '/';
+      this.template('../../templates/Controller.tpl.js', targetDir + this.ctor() + 'Controller.js');
+      this.template('../../templates/main-.tpl.js', targetDir + 'main-' + this.proj() + '.js');
+      this.template('../../templates/models/Model.tpl.js', targetDir + 'models/' + this.ctor() + '.js');
+      this.template('../../templates/views/View.tpl.js', targetDir + 'views/' + this.ctor() + '.js');
     }
   },
 

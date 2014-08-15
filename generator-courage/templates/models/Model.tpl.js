@@ -10,7 +10,7 @@ function (BaseModel) {
       	// Add your variables here
       },
 
-      url: '/api/internal/enduser/something'
+      url: '[API_URL]'
 
     })
   };

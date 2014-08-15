@@ -3,20 +3,40 @@ var yeoman = require('yeoman-generator');
 module.exports = yeoman.generators.Base.extend({
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
-    this.argument('new', { type: String, required: true });
+    this.argument('new', { type: String, required: false });
     this.argument('delete', { type: String, required: false });
 
-    // setup project name
-    this.name = this.new
-
+    // setup project name from argument
+    this.name = this.new;
   },
   initializing: {
+    projectNamePrompt: function () {
+      // If the user didn't specify a name for --new, prompt here for it
+      if(typeof this.name === 'undefined' || this.name === null || this.name === "") {
+        var pName = this.async();
+        var pPrompt = [{
+            type    : 'input',
+            name    : 'name',
+            message : 'Project Name',
+        }];
+        var self = this;
+        this.prompt(pPrompt, function (answers) {
+            // If they still refuse, quit
+            if( answers.name === "" ) {
+              throw { name: 'FatalError', message: 'You must define project name.' };
+            }
+            self.name = answers.name;
+            pName();
+        });
+      }
+
+    },
 		projectName: function () {
       		this.log('Creating files for new project ' + this.name);
 	  }
   },
   prompting: {
-     prompts: function() {
+     optionalPrompts: function() {
       this.log(this.yeoman);
 
 	     	var done = this.async();
@@ -27,17 +47,13 @@ module.exports = yeoman.generators.Base.extend({
 		     		default : '/change/this/endpoint'
 		    },{
 		    		type    : 'input',
-		      		name    : 'formTitle',
+		      	name    : 'formTitle',
 		     		message : 'Form Title',
 		     		default : 'FORM_TITLE'
 		    }];
 
 		    this.prompt(prompts, function (answers) {
-		    	// Check for required project name
-	        	if( answers.projectName === "" ) {
-		     		throw { name: 'FatalError', message: 'You must define project name.' };
-		     	} 
-			    this.name = answers.name;
+		    	
 			    this.log("ProjectName = " + this.name);
 
 			    //check for optional inputs

@@ -2,14 +2,18 @@ var yeoman = require('yeoman-generator');
 
 module.exports = yeoman.generators.NamedBase.extend({
   initializing: {
-		test1: function () {
-	  	console.log('This is test 1 for ' + this.name);
-	  },
-
-	  test2: function () {
-	  		this.template('../../templates/Controller.tpl.js', 'Controller.js');
-	  		console.log('I created your new Controller!!');
+		projectName: function () {
+      console.log('Creating files for new project ' + this.name);
 	  }
   },
+
+  writing: {
+	  copyTemplates: function () {
+        this.template('../../templates/Controller.tpl.js', this.name + 'Controller.js');
+        this.template('../../templates/main-.tpl.js', 'main-' + this.name + '.js');
+        this.template('../../templates/models/Model.tpl.js', 'views/' + this.name + 'View.js');
+        this.template('../../templates/views/View.tpl.js', 'models/' + this.name + '.js');
+	  }
+  }
 
 });

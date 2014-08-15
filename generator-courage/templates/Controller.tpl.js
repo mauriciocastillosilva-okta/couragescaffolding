@@ -2,15 +2,15 @@
 /*<%= _.camelize(name) %>, Courage Scaffolding Generated*/
 define([
   'shared/util/BaseController',
-  './views/<%=_.camelize(name)%>Form',
-  './models/<%=_.camelize(name)%>Model'
-], function (BaseController, <%=_.camelize(name)%>Form, <%=_.camelize(name)%>Model) {
+  './views/<%= ctor %>Form',
+  './models/<%= ctor %>'
+], function (BaseController, <%= ctor %>Form, <%= ctor %>) {
   return BaseController.extend({
 
-    View: <%=_.camelize(name)%>Form,
+    View: <%= ctor %>Form,
 
     initialize: function () {
-      this.model = new <%=_.camelize(name)%>Model.Model();
+      this.model = new <%= ctor %>.Model();
       this.model.fetch();
     }
 

@@ -77,16 +77,15 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     copyTemplates: function () {
-      if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
-        this.target += '/';
-      }
-      var targetDir = this.target + this.proj() + '/';
+      var targetDir = this.getTargetDir();
       this.template('../../templates/Controller.tpl.js', targetDir + this.ctor() + 'Controller.js');
       this.template('../../templates/main-.tpl.js', targetDir + 'main-' + this.proj() + '.js');
       this.template('../../templates/models/Model.tpl.js', targetDir + 'models/' + this.ctor() + '.js');
       this.template('../../templates/views/View.tpl.js', targetDir + 'views/' + this.ctor() + '.js');
+    },
 
     copyTests: function () {
+      var targetDir = this.getTargetDir();
       this.template('../../templates/tests/Controller_spec.tpl.js', targetDir + this.ctor() + 'Controller_spec.js');
       this.template('../../templates/tests/View_spec.tpl.js', targetDir + this.ctor() + '_spec.js');
     }
@@ -104,6 +103,12 @@ module.exports = yeoman.generators.Base.extend({
 
   proj: function () { if(this.name) {return this.util.lowercase(this.name)}},
   ctor: function () { if(this.name) {return this.util.capitalize(this.name)}},
+  getTargetDir: function () {
+    if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
+      this.target += '/';
+    }
+    return this.target + this.proj() + '/';
+  },
 
   end: {
     jspOutput: function () {

@@ -9,7 +9,6 @@ function (BaseForm) {
     layout: 'o-form-theme',
     read: true,
     autoSave: true,
-    noCancelButton: true,
 
     initialize: function () {
       // Add your inputs here

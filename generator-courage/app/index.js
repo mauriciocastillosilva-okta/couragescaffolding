@@ -12,6 +12,24 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   initializing: {
+    logo: function() {
+      this.log('                                     _____');
+      this.log('                                  __/      ----_');
+      this.log('                                 /              \\');
+      this.log('                                /              \\');
+      this.log('                               |             _____)');
+      this.log('                               |            /     \\');
+      this.log('    C O U R A G E              |            \\    /)\\');
+      this.log('                               |             \\__/  /');
+      this.log('   __/\\__/\\./\\__/\\./\\__/\\./\\__/ | —    _          /\\');
+      this.log('  |_ |  |  | |  |  | |  |  |  - -__     \\_____/   \\_/\\');
+      this.log('     \\/  \\/ \\/  \\/ \\/  \\/ \\/  \\/   ----|   /          |');
+      this.log('                                       |  |___________|');
+      this.log('    B A C K B O N E                    |  | ((_(_)| )_)');
+      this.log('                                       |  \\_((_(_)|/(_)');
+      this.log('                                       \\             (');
+      this.log('                                        \\_____________');
+    },
     projectNamePrompt: function () {
       // If the user didn't specify a name for --new, prompt here for it
       if(typeof this.name === 'undefined' || this.name === null || this.name === "") {
@@ -34,14 +52,12 @@ module.exports = yeoman.generators.Base.extend({
 
     },
     projectName: function () {
-          this.log('Creating files for new project ' + this.name);
+          this.log('\n\nCreating files for new project ' + this.name);
     }
   },
 
   prompting: {
     optionalPrompts: function() {
-      this.log(this.yeoman);
-
       var done = this.async();
       var prompts = [{
           type    : 'input',

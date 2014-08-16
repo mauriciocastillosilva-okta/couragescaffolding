@@ -74,6 +74,27 @@ module.exports = yeoman.generators.Base.extend({
           name    : 'target',
           message : 'Target folder, leave empty to use current folder',
           default : ''
+      },{
+        type: 'checkbox',
+        name: 'features',
+        message: 'What more would you like?',
+        choices: [{
+          name: 'MasterView',
+          value: 'masterview',
+          checked: true
+        }, {
+          name: 'Data List',
+          value: 'datalist',
+          checked: false
+        }, {
+          name: 'Form',
+          value: 'form',
+          checked: false
+        }, {
+          name: 'Basic View',
+          value: 'basicview',
+          checked: false
+        }]
       }];
 
       this.prompt(prompts, function (answers) {
@@ -101,9 +122,9 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     copyTests: function () {
-      var targetDir = this.getTargetDir();
-      this.template('../../templates/tests/Controller_spec.tpl.js', targetDir + this.ctor() + 'Controller_spec.js');
-      this.template('../../templates/tests/View_spec.tpl.js', targetDir + this.ctor() + '_spec.js');
+      var testDir = this.getTestDir(this.target);
+      this.template('../../templates/tests/Controller_spec.tpl.js', testDir + this.ctor() + 'Controller_spec.js');
+      this.template('../../templates/tests/View_spec.tpl.js', testDir + 'views/' + this.ctor() + '_spec.js');
     }
   },
 
@@ -124,6 +145,9 @@ module.exports = yeoman.generators.Base.extend({
       this.target += '/';
     }
     return this.target + this.proj() + '/';
+  },
+  getTestDir: function () {
+    return '../test/unit/spec/' + this.proj() + '/';
   },
 
   end: {

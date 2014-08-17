@@ -2,7 +2,7 @@
 /*<%= _.camelize(name) %>, Courage Scaffolding Generated*/
 define([
   'shared/util/BaseController',
-  './views/<%= ctor() %>Form',
+  './views/<%= ctor() %>',
   './models/<%= ctor() %>'
 ], function (BaseController, <%= ctor() %>Form, <%= ctor() %>) {
   return BaseController.extend({

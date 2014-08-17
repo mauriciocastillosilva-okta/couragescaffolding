@@ -1,7 +1,7 @@
 define([
   '<%= proj() %>/<%= ctor() %>Controller'
-], function (Controller) {
-  
+], function (<%= ctor() %>Controller) {
+
   describe('<%= proj() %>/<%= ctor() %>Controller', function () {
 
     beforeEach(function () {
@@ -11,10 +11,10 @@ define([
     describe('initialize', function () {
 
       it('describe the behavior', function () {
-        expect('this').toBe('that'); 
+        expect('this').toBe('that');
       });
 
     })
-    
+
   });
 });

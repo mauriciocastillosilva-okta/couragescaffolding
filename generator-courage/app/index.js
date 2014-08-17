@@ -5,8 +5,7 @@ module.exports = yeoman.generators.Base.extend({
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
     this.argument('new', { type: String, required: false });
-    this.argument('delete', { type: String, required: false });
-
+    
     // setup project name from argument
     this.name = this.new;
   },

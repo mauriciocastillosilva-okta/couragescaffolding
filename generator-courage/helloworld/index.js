@@ -11,6 +11,25 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   initializing: {
+    logo: function() {
+      this.log('                                     _____');
+      this.log('                                  __/      ----_');
+      this.log('                                 /              \\');
+      this.log('                                /              \\');
+      this.log('                               |             _____)');
+      this.log('                               |            /     \\');
+      this.log('    C O U R A G E              |            \\    /)\\');
+      this.log('                               |             \\__/  /');
+      this.log('   __/\\__/\\./\\__/\\./\\__/\\./\\__/ | —    _          /\\');
+      this.log('  |_ |  |  | |  |  | |  |  |  - -__     \\_____/   \\_/\\');
+      this.log('     \\/  \\/ \\/  \\/ \\/  \\/ \\/  \\/   ----|   /          |');
+      this.log('                                       |  |___________|');
+      this.log('    B A C K B O N E                    |  | ((_(_)| )_)');
+      this.log('                                       |  \\_((_(_)|/(_)');
+      this.log('                                       \\             (');
+      this.log('                                        \\_____________');
+      this.log('\n\nDemo');
+    },
     projectNamePrompt: function () {
       // If the user didn't specify a name for --new, prompt here for it
       if(typeof this.name === 'undefined' || this.name === null || this.name === "") {
@@ -18,29 +37,24 @@ module.exports = yeoman.generators.Base.extend({
         var pPrompt = [{
             type    : 'input',
             name    : 'name',
-            message : 'Controller Name',
+            message : 'Project Name',
         }];
         var self = this;
         this.prompt(pPrompt, function (answers) {
             // If they still refuse, quit
             if( answers.name === "" ) {
-              throw { name: 'FatalError', message: 'You must define controller name.' };
+              throw { name: 'FatalError', message: 'You must define project name.' };
             }
             self.name = answers.name;
             pName();
         });
       }
 
-    },
-    projectName: function () {
-          this.log('Creating ' + this.name + ' Controller');
     }
   },
 
   prompting: {
     optionalPrompts: function() {
-      this.log(this.yeoman);
-
       var done = this.async();
       var prompts = [{
           type    : 'input',
@@ -51,7 +65,7 @@ module.exports = yeoman.generators.Base.extend({
 
       this.prompt(prompts, function (answers) {
 
-        this.log("Controller Name = " + this.name);
+        this.log("Project Name = " + this.name);
 
         //check for optional inputs
         this.target = answers.target;
@@ -70,11 +84,6 @@ module.exports = yeoman.generators.Base.extend({
       this.template('views/HelloWorld.tpl.js', targetDir + this.ctor() + '.js');
       this.template('main-helloworld.tpl.js', targetDir + "main-" + this.proj() + '.js');
     },
-
-    copyTests: function () {
-      var targetDir = this.getTargetDir();
-      //this.template('../../templates/tests/Controller_spec.tpl.js', targetDir + this.ctor() + 'Controller_spec.js');
-    }
   },
 
   util: {
@@ -98,7 +107,20 @@ module.exports = yeoman.generators.Base.extend({
 
   end: {
     jspOutput: function () {
-      this.log('Controller created.');
+      this.log('Demo project created.');
+      this.log('Copy the next lines to the jsp where you need to include this project');
+      this.log('');
+      this.log('  <div id="'+ this.proj() + '-container">');
+      this.log('    <ss:requirejs main="' + this.proj() + '/main-' + this.proj() + '">');
+      this.log('    <script>');
+      this.log('      require.config || (require.config = {});');
+      this.log('      require.config[\'config\'] = {');
+      this.log('        el: \'#' + this.proj() + '-container\'');
+      this.log('      };');
+      this.log('    </script>');
+      this.log('    </ss:requirejs>');
+      this.log('  </div>');
+      this.log('');
     }
   }
 

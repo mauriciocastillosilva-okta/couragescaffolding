@@ -11,6 +11,25 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   initializing: {
+    logo: function() {
+      this.log('                                     _____');
+      this.log('                                  __/      ----_');
+      this.log('                                 /              \\');
+      this.log('                                /              \\');
+      this.log('                               |             _____)');
+      this.log('                               |            /     \\');
+      this.log('    C O U R A G E              |            \\    /)\\');
+      this.log('                               |             \\__/  /');
+      this.log('   __/\\__/\\./\\__/\\./\\__/\\./\\__/ | —    _          /\\');
+      this.log('  |_ |  |  | |  |  | |  |  |  - -__     \\_____/   \\_/\\');
+      this.log('     \\/  \\/ \\/  \\/ \\/  \\/ \\/  \\/   ----|   /          |');
+      this.log('                                       |  |___________|');
+      this.log('    B A C K B O N E                    |  | ((_(_)| )_)');
+      this.log('                                       |  \\_((_(_)|/(_)');
+      this.log('                                       \\             (');
+      this.log('                                        \\_____________');
+      this.log('\n\n');
+    },
     projectNamePrompt: function () {
       // If the user didn't specify a name for --new, prompt here for it
       if(typeof this.name === 'undefined' || this.name === null || this.name === "") {
@@ -31,16 +50,11 @@ module.exports = yeoman.generators.Base.extend({
         });
       }
 
-    },
-    projectName: function () {
-          this.log('Creating ' + this.name + ' Controller');
     }
   },
 
   prompting: {
     optionalPrompts: function() {
-      this.log(this.yeoman);
-
       var done = this.async();
       var prompts = [{
           type    : 'input',
@@ -69,8 +83,8 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     copyTests: function () {
-      var targetDir = this.getTargetDir();
-      this.template('../../templates/tests/Controller_spec.tpl.js', targetDir + this.ctor() + 'Controller_spec.js');
+      var testDir = this.getTestDir();
+      this.template('../../templates/tests/Controller_spec.tpl.js', testDir + this.ctor() + 'Controller_spec.js');
     }
   },
 
@@ -86,11 +100,16 @@ module.exports = yeoman.generators.Base.extend({
 
   proj: function () { if(this.name) {return this.util.lowercase(this.name)}},
   ctor: function () { if(this.name) {return this.util.capitalize(this.name)}},
+
   getTargetDir: function () {
     if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
       this.target += '/';
     }
     return this.target + this.proj() + '/';
+  },
+
+  getTestDir: function () {
+    return '../test/unit/spec/' + this.proj() + '/';
   },
 
   end: {

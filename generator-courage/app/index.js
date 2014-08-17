@@ -29,6 +29,7 @@ module.exports = yeoman.generators.Base.extend({
       this.log('                                       |  \\_((_(_)|/(_)');
       this.log('                                       \\             (');
       this.log('                                        \\_____________');
+      this.log('\n\n');
     },
     projectNamePrompt: function () {
       // If the user didn't specify a name for --new, prompt here for it
@@ -50,9 +51,6 @@ module.exports = yeoman.generators.Base.extend({
         });
       }
 
-    },
-    projectName: function () {
-          this.log('\n\nCreating files for new project ' + this.name);
     }
   },
 
@@ -74,27 +72,6 @@ module.exports = yeoman.generators.Base.extend({
           name    : 'target',
           message : 'Target folder, leave empty to use current folder',
           default : ''
-      },{
-        type: 'checkbox',
-        name: 'features',
-        message: 'What more would you like?',
-        choices: [{
-          name: 'MasterView',
-          value: 'masterview',
-          checked: true
-        }, {
-          name: 'Data List',
-          value: 'datalist',
-          checked: false
-        }, {
-          name: 'Form',
-          value: 'form',
-          checked: false
-        }, {
-          name: 'Basic View',
-          value: 'basicview',
-          checked: false
-        }]
       }];
 
       this.prompt(prompts, function (answers) {
@@ -122,7 +99,7 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     copyTests: function () {
-      var testDir = this.getTestDir(this.target);
+      var testDir = this.getTestDir();
       this.template('../../templates/tests/Controller_spec.tpl.js', testDir + this.ctor() + 'Controller_spec.js');
       this.template('../../templates/tests/View_spec.tpl.js', testDir + 'views/' + this.ctor() + '_spec.js');
     }
@@ -140,12 +117,14 @@ module.exports = yeoman.generators.Base.extend({
 
   proj: function () { if(this.name) {return this.util.lowercase(this.name)}},
   ctor: function () { if(this.name) {return this.util.capitalize(this.name)}},
+
   getTargetDir: function () {
     if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
       this.target += '/';
     }
     return this.target + this.proj() + '/';
   },
+
   getTestDir: function () {
     return '../test/unit/spec/' + this.proj() + '/';
   },

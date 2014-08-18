@@ -76,7 +76,8 @@ module.exports = yeoman.generators.Base.extend({
 
         //check for optional inputs
         this.target = answers.target;
-
+        this.viewName = this.name + 'View'; //ex: 'AppUser' + 'DataList'
+        this.model = this.name;
         done();
 
       }.bind(this));

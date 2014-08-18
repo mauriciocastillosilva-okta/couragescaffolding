@@ -1,12 +1,20 @@
 define([
-  '<%= proj() %>/views/<%= ctor() %>'
-], function (<%= ctor() %>) {
+  '<%= proj() %>/views/<%= viewName %>'
+], function (<%= viewName %>) {
 
-    describe('<%= proj() %>/views/<%= ctor() %>', function () {
+  describe('<%= proj() %>/views/<%= viewName %>', function () {
 
-      it('describe some behavior', function () {
+    beforeEach(function () {
+      //add common test functions here
+    });
+
+    describe('initialize', function () {
+
+      it('describe the behavior', function () {
         expect('this').toBe('that');
       });
-      
-    });
+
+    })
+    
+  });
 });

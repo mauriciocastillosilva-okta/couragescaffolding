@@ -1,17 +1,12 @@
 define([
-  'shared/views/forms/BaseForm'
+  'shared/views/BaseView'
 ],
-function (BaseForm) {
+function (BaseView) {
 
-  return BaseForm.extend({
-
-    title: '<%= formTitle %>',
-    layout: 'o-form-theme',
-    read: true,
-    autoSave: true,
+  return BaseView.extend({
 
     initialize: function () {
-      // Add your inputs here
+      // Add your code here
     }
 
   });

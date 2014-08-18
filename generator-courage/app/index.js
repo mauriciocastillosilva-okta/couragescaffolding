@@ -60,32 +60,56 @@ module.exports = yeoman.generators.Base.extend({
   prompting: {
     optionalPrompts: function() {
       var done = this.async();
-      var prompts = [{
+      var prompts = [
+        {
+          type    : 'input',
+          name    : 'name',
+          message : 'Project Name:',
+          when: function () {
+            !this.name;
+          }
+        },{
+          type    : 'list',
+          name    : 'view',
+          message : 'Main View:',
+          choices : [ 'View', 'MasterView', 'DataList', 'Form'] 
+        },{
+          type    : 'input',
+          name    : 'model',
+          message : 'Model Name:',
+          default : this.ctor()
+        },{
           type    : 'input',
           name    : 'api',
-          message : 'API endpoint',
+          message : 'API endpoint for the model:',
           default : '/change/this/endpoint'
-      },{
+        },{
           type    : 'input',
           name    : 'formTitle',
           message : 'Form Title',
+          when: function( answers ) {
+            return answers.view === 'Form'
+          },
           default : 'My Form'
-      },{
+        },{
           type    : 'input',
           name    : 'target',
-          message : 'Target folder, leave empty to use current folder',
-          default : ''
-      }];
+          message : 'Target Folder:',
+          default : this.root
+        }
+      ];
 
       this.prompt(prompts, function (answers) {
-
-        this.log("ProjectName = " + this.name);
 
         //check for optional inputs
         this.api = answers.api;
         this.formTitle = answers.formTitle;
         this.target = answers.target;
-
+        this.projDir = this.root + this.name;
+        this.testDir = this.test + this.name;
+        this.view = answers.view;
+        this.viewName = this.ctor() + this.view; //ex: 'AppUser' + 'DataList'
+        this.model = answers.model;
         done();
 
       }.bind(this));
@@ -93,33 +117,38 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: {
-    copyTemplates: function () {
+    commonTemplates: function () {
       var targetDir = this.getTargetDir();
       this.template('../../templates/Controller.tpl.js', targetDir + this.ctor() + 'Controller.js');
       this.template('../../templates/main-.tpl.js', targetDir + 'main-' + this.proj() + '.js');
-      this.template('../../templates/models/Model.tpl.js', targetDir + 'models/' + this.ctor() + '.js');
-      this.template('../../templates/views/View.tpl.js', targetDir + 'views/' + this.ctor() + '.js');
+      this.template('../../templates/models/Model.tpl.js', targetDir + 'models/' + this.model + '.js');
+      this.template('../../templates/views/' + this.view + '.tpl.js', targetDir + 'views/' + this.viewName + '.js');
     },
 
     copyTests: function () {
       var testDir = this.getTestDir();
       this.template('../../templates/tests/Controller_spec.tpl.js', testDir + this.ctor() + 'Controller_spec.js');
-      this.template('../../templates/tests/View_spec.tpl.js', testDir + 'views/' + this.ctor() + '_spec.js');
+      this.template('../../templates/tests/View_spec.tpl.js', testDir + 'views/' + this.viewName + '_spec.js');
+      this.template('../../templates/tests/Model_spec.tpl.js', testDir + 'models/' + this.model + '_spec.js');
     }
   },
 
   util: {
-    lowercase: function (word) {
-      return word.toLowerCase();
-    },
-
     capitalize: function (word) {
       return word[0].toUpperCase() + word.slice(1);
+    },
+
+    projName: function (words) {
+      return this.constructorName(words).toLowerCase();
+    },
+
+    constructorName: function (words) {
+      return words.split(/\s|\-/).map(this.capitalize).join('');
     }
   },
 
-  proj: function () { if(this.name) {return this.util.lowercase(this.name)}},
-  ctor: function () { if(this.name) {return this.util.capitalize(this.name)}},
+  proj: function () { if(this.name) {return this.util.projName(this.name)}},
+  ctor: function () { if(this.name) {return this.util.constructorName(this.name)}},
 
   getTargetDir: function () {
     if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
@@ -137,6 +166,8 @@ module.exports = yeoman.generators.Base.extend({
   end: {
     jspOutput: function () {
       this.log('All files for project ' + this.proj() + ' have been generated.');
+      // this.log('To revert these changes:');
+      // this.log('rm -rf ' + this.projDir + ' && rm -rf ' + this.testDir);
       this.log('Copy the next lines to the jsp where you need to include this project');
       this.log('');
       this.log('  <div id="'+ this.proj() + '-container"></div>');

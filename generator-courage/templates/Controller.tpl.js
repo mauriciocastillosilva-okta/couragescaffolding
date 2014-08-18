@@ -1,16 +1,16 @@
 /* jshint maxparams:8 */
-/*<%= _.camelize(name) %>, Courage Scaffolding Generated*/
+/* Generated with Courage Scaffolding */
 define([
   'shared/util/BaseController',
-  './views/<%= ctor() %>',
-  './models/<%= ctor() %>'
-], function (BaseController, <%= ctor() %>Form, <%= ctor() %>) {
+  './views/<%= viewName %>',
+  './models/<%= model %>'
+], function (BaseController, <%= viewName %>, <%= model %>) {
   return BaseController.extend({
 
-    View: <%= ctor() %>Form,
+    View: <%= viewName %>,
 
     initialize: function () {
-      this.model = new <%= ctor() %>.Model();
+      this.model = new <%= model %>.Model();
       this.model.fetch();
     }
 

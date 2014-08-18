@@ -5,7 +5,7 @@ define([
   describe('<%= proj() %>/<%= ctor() %>Controller', function () {
 
     beforeEach(function () {
-
+      //add common test functions here
     });
 
     describe('initialize', function () {
@@ -15,6 +15,6 @@ define([
       });
 
     })
-
+    
   });
 });

@@ -1,12 +1,20 @@
 define([
-  '<%= proj() %>/models/<%= ctor() %>'
+  '<%= proj() %>/models/<%= model %>'
 ], function (<%= ctor() %>) {
 
-    describe('<%= proj() %>/models/<%= ctor() %>', function () {
+  describe('<%= proj() %>/models/<%= model %>', function () {
 
-      it('describe some behavior', function () {
+    beforeEach(function () {
+      //add common test functions here
+    });
+
+    describe('initialize', function () {
+
+      it('describe the behavior', function () {
         expect('this').toBe('that');
       });
-      
-    });
+
+    })
+    
+  });
 });

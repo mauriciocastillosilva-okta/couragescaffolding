@@ -49,7 +49,6 @@ module.exports = yeoman.generators.Base.extend({
             pName();
         });
       }
-
     }
   },
 
@@ -133,16 +132,15 @@ module.exports = yeoman.generators.Base.extend({
       this.log('All files for project ' + this.proj() + ' have been generated.');
       this.log('Copy the next lines to the jsp where you need to include this project');
       this.log('');
-      this.log('  <div id="'+ this.proj() + '-container">');
-      this.log('    <ss:requirejs main="' + this.proj() + '/main-' + this.proj() + '">');
-      this.log('    <script>');
-      this.log('      require.config || (require.config = {});');
-      this.log('      require.config[\'config\'] = {');
-      this.log('        el: \'#' + this.proj() + '-container\'');
-      this.log('      };');
-      this.log('    </script>');
-      this.log('    </ss:requirejs>');
-      this.log('  </div>');
+      this.log('  <div id="'+ this.proj() + '-container"></div>');
+      this.log('  <ss:requirejs main="' + this.proj() + '/main-' + this.proj() + '">');
+      this.log('  <script>');
+      this.log('    require.config || (require.config = {});');
+      this.log('    require.config[\'config\'] = {');
+      this.log('      el: \'#' + this.proj() + '-container\'');
+      this.log('    };');
+      this.log('  </script>');
+      this.log('  </ss:requirejs>');
       this.log('');
     }
   }

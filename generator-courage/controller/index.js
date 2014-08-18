@@ -8,6 +8,11 @@ module.exports = yeoman.generators.Base.extend({
 
     // setup project name from argument
     this.name = this.new;
+    
+    // project root begins as home of .yo-rc.json file, okta-core
+    // for now assume all changes are in okta-core not end user
+    this.root = this.destinationRoot() + '/WebContent/js/mvc/';
+    this.test = this.destinationRoot() + '/WebContent/js/test/unit/spec/';
   },
 
   initializing: {
@@ -46,6 +51,8 @@ module.exports = yeoman.generators.Base.extend({
               throw { name: 'FatalError', message: 'You must define controller name.' };
             }
             self.name = answers.name;
+            this.projDir = this.root + this.name;
+            this.testDir = this.test + this.name;
             pName();
         });
       }
@@ -89,27 +96,33 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   util: {
-    lowercase: function (word) {
-      return word.toLowerCase();
-    },
-
     capitalize: function (word) {
       return word[0].toUpperCase() + word.slice(1);
+    },
+
+    projName: function (words) {
+      return this.constructorName(words).toLowerCase();
+    },
+
+    constructorName: function (words) {
+      return words.split(/\s|\-/).map(this.capitalize).join('');
     }
   },
 
-  proj: function () { if(this.name) {return this.util.lowercase(this.name)}},
-  ctor: function () { if(this.name) {return this.util.capitalize(this.name)}},
+  proj: function () { if(this.name) {return this.util.projName(this.name); }},
+  ctor: function () { if(this.name) {return this.util.constructorName(this.name); }},
 
   getTargetDir: function () {
     if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
       this.target += '/';
+    } else {
+      this.target = this.root;
     }
     return this.target + this.proj() + '/';
   },
 
   getTestDir: function () {
-    return '../test/unit/spec/' + this.proj() + '/';
+    return this.test + this.proj() + '/';
   },
 
   end: {

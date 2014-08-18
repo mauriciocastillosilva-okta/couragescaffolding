@@ -88,14 +88,9 @@ module.exports = yeoman.generators.Base.extend({
           name    : 'formTitle',
           message : 'Form Title',
           when: function( answers ) {
-            return answers.view === 'Form'
+            return answers.view === 'Form';
           },
           default : 'My Form'
-        },{
-          type    : 'input',
-          name    : 'target',
-          message : 'Target Folder:',
-          default : this.root
         }
       ];
 
@@ -104,7 +99,7 @@ module.exports = yeoman.generators.Base.extend({
         //check for optional inputs
         this.api = answers.api;
         this.formTitle = answers.formTitle;
-        this.target = answers.target;
+        this.target = this.root;
         this.projDir = this.root + this.name;
         this.testDir = this.test + this.name;
         this.view = answers.view;

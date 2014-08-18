@@ -8,7 +8,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // setup project name from argument
     this.name = this.new;
-    
+
     // project root begins as home of .yo-rc.json file, okta-core
     // for now assume all changes are in okta-core not end user
     this.root = this.destinationRoot() + '/WebContent/js/mvc/';

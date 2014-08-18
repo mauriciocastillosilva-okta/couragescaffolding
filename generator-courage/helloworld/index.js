@@ -2,6 +2,16 @@ var yeoman = require('yeoman-generator');
 
 module.exports = yeoman.generators.Base.extend({
 
+  constructor: function () {
+    yeoman.generators.Base.apply(this, arguments);
+    
+    this.name = 'helloworld';
+    // project root begins as home of .yo-rc.json file, okta-core
+    // for now assume all changes are in okta-core not end user
+    this.root = this.destinationRoot() + '/WebContent/js/mvc/';
+    this.test = this.destinationRoot() + '/WebContent/js/test/unit/spec/';
+  },
+
   initializing: {
     logo: function() {
       this.log('                                     _____');
@@ -54,28 +64,51 @@ module.exports = yeoman.generators.Base.extend({
     },
   },
 
+  util: {
+      capitalize: function (word) {
+        return word[0].toUpperCase() + word.slice(1);
+      },
+
+      projName: function (words) {
+        return this.constructorName(words).toLowerCase();
+      },
+
+      constructorName: function (words) {
+        return words.split(/\s|\-/).map(this.capitalize).join('');
+      }
+    },
+
+  proj: function () { if(this.name) {return this.util.projName(this.name)}},
+  ctor: function () { if(this.name) {return this.util.constructorName(this.name)}},
+
   getTargetDir: function () {
     if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
       this.target += '/';
+    } else {
+      this.target = this.root;
     }
-    return this.target + 'helloworld/';
+    return this.target + this.proj() + '/';
   },
+
+  getTestDir: function () {
+    return this.test + this.proj() + '/';
+  },
+
 
   end: {
     jspOutput: function () {
       this.log('Demo HelloWorld created.');
-      this.log('Copy the next lines to the jsp if you want to see HelloWorld in action');
+      this.log('Copy the next lines to the jsp where you need to include this project');
       this.log('');
-      this.log('  <div id="helloworld-container">');
-      this.log('    <ss:requirejs main="helloworld/main-helloworld">');
-      this.log('    <script>');
-      this.log('      require.config || (require.config = {});');
-      this.log('      require.config[\'config\'] = {');
-      this.log('        el: \'#helloworld-container\'');
-      this.log('      };');
-      this.log('    </script>');
-      this.log('    </ss:requirejs>');
-      this.log('  </div>');
+      this.log('  <div id="'+ this.proj() + '-container"></div>');
+      this.log('  <ss:requirejs main="' + this.proj() + '/main-' + this.proj() + '">');
+      this.log('  <script>');
+      this.log('    require.config || (require.config = {});');
+      this.log('    require.config[\'config\'] = {');
+      this.log('      el: \'#' + this.proj() + '-container\'');
+      this.log('    };');
+      this.log('  </script>');
+      this.log('  </ss:requirejs>');
       this.log('');
     }
   }

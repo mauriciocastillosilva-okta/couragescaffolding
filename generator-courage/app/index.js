@@ -8,6 +8,11 @@ module.exports = yeoman.generators.Base.extend({
     
     // setup project name from argument
     this.name = this.new;
+
+    // project root begins as home of .yo-rc.json file, okta-core
+    // for now assume all changes are in okta-core not end user
+    this.root = this.destinationRoot() + '/WebContent/js/mvc/';
+    this.test = this.destinationRoot() + '/WebContent/js/test/unit/spec/';
   },
 
   initializing: {
@@ -64,7 +69,7 @@ module.exports = yeoman.generators.Base.extend({
           type    : 'input',
           name    : 'formTitle',
           message : 'Form Title',
-          default : 'FORM_TITLE'
+          default : 'My Form'
       },{
           type    : 'input',
           name    : 'target',
@@ -119,12 +124,14 @@ module.exports = yeoman.generators.Base.extend({
   getTargetDir: function () {
     if (this.target.length > 0 && this.target.substr(this.target.length-1) !== '/') {
       this.target += '/';
+    } else {
+      this.target = this.root;
     }
     return this.target + this.proj() + '/';
   },
 
   getTestDir: function () {
-    return '../test/unit/spec/' + this.proj() + '/';
+    return this.test + this.proj() + '/';
   },
 
   end: {

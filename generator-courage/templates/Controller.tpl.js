@@ -10,7 +10,7 @@ define([
     View: <%= viewName %>,
 
     initialize: function () {
-      this.model = new <%= model %>.Model();
+      this.model = new <%= model %>.Model({id: 'add_an_id'});
       this.model.fetch();
     }
 

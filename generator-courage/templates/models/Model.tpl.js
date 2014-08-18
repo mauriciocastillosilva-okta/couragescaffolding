@@ -1,18 +1,15 @@
 define([
-  'shared/models/BaseModel'
-],
-function (BaseModel) {
+  'shared/models/BaseModel',
+  'shared/models/BaseCollection'
+], function (BaseModel, BaseCollection) {
+
+  var <%= model %> = BaseModel.extend({
+    url: function () {
+      return '<%= api %>' + this.id;
+    }
+  });
 
   return {
-    Model: BaseModel.extend({
-
-      defaults: {
-      	// Add your variables here
-      },
-
-      url: '<%= api %>'
-
-    })
+    Model: <%= model %>
   };
-
 });
